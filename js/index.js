@@ -73,6 +73,39 @@ searchInput.addEventListener("input", filterData)
 
 let filteredArr;
 
+
+
+function filterData() {
+    searchResult.innerHTML = "";
+
+    const cv = document.getElementById("Form_Search").value;
+    const searchedString = cv.toLowerCase().replace(/\s/g, "");
+    let newFilteredArr = [];
+
+    
+    for (let i = 0; i < dataArray.length; i++) {
+        const el = dataArray[i];
+        if (
+            el.name.toLowerCase().replace(/\s/g, "").includes(searchedString) ||
+            el.description.toLowerCase().replace(/\s/g, "").includes(searchedString) ||
+            el.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().replace(/\s/g, "").includes(searchedString)) ||
+            `${el.name + el.ingredients}`.toLowerCase().replace(/\s/g, "").includes(searchedString)
+        ) {
+            newFilteredArr.push(el);
+        }
+    }
+
+    filteredArr = newFilteredArr;
+    filterData3(ingredient_array);
+    updateSelectOptions(filteredArr);
+    displayData(filteredArr);
+}
+
+
+
+
+
+/*
 function filterData() {
 
     searchResult.innerHTML = "";
@@ -96,7 +129,7 @@ function filterData() {
       displayData(filteredArr);
    
 }
-
+*/
 
 
 // Tri alphabetique
@@ -300,6 +333,42 @@ function deleteOption(valeur, nom) {
 var ingredient_array = [];
 
 
+
+
+function filterData3(ingredient_array) {
+    searchResult.innerHTML = "";
+    let newFilteredArr = filteredArr.slice();
+
+    for (let i = 0; i < ingredient_array.length; i++) {
+        const searchedString = ingredient_array[i].toLowerCase().replace(/\s/g, "");
+        const tempArr = [];
+
+        
+        for (let j = 0; j < newFilteredArr.length; j++) {
+            const el = newFilteredArr[j];
+            if (
+                el.name.toLowerCase().replace(/\s/g, "").includes(searchedString) ||
+                el.description.toLowerCase().replace(/\s/g, "").includes(searchedString) ||
+                el.appliance.toLowerCase().replace(/\s/g, "").includes(searchedString) ||
+                el.ustensils.toString().toLowerCase().replace(/\s/g, "").includes(searchedString) ||
+                el.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().replace(/\s/g, "").includes(searchedString)) ||
+                `${el.name + el.description}`.toLowerCase().replace(/\s/g, "").includes(searchedString)
+            ) {
+                tempArr.push(el);
+            }
+        }
+        newFilteredArr = tempArr; 
+    }
+
+    filteredArr = newFilteredArr; 
+    updateSelectOptions(filteredArr);
+    displayData(filteredArr);
+}
+
+
+
+
+/*
 function filterData3(ingredient_array) {
 
 
@@ -333,7 +402,7 @@ displayData(filteredArr);
 
 
 }
-
+*/
 
 
 
